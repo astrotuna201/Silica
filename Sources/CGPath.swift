@@ -45,7 +45,7 @@ public enum CGPathElementType {
 
 public extension CGPathElement {
     
-    init(_ element: Silica.Path.Element) {
+    init(_ element: Path.Element) {
         
         switch element {
             
@@ -77,7 +77,7 @@ public extension CGPathElement {
     }
 }
 
-public extension Silica.Path.Element {
+public extension Path.Element {
     
     init(_ element: CGPathElement) {
         

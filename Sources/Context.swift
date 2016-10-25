@@ -315,7 +315,7 @@ public final class Context {
     
     // MARK: Setting Graphics State Attributes
     
-    public func setShadow(offset: Size, radius: Double, color: Color) {
+    public func setShadow(_ offset: Size, radius: Double, color: Color) {
         
         let colorPattern = Pattern(color: color)
         
@@ -362,9 +362,9 @@ public final class Context {
         curve(to: (first, second), end: end)
     }
     
-    public func arc(center: Point, radius: Double, angle: (start: Double, end: Double), negative: Bool) {
+    public func arc(_ center: Point, radius: Double, angle: (start: Double, end: Double), negative: Bool) {
         
-        internalContext.addArc(center: (x: center.x, y: center.y), radius: radius, angle: angle, negative: negative)
+        internalContext.addArc((x: center.x, y: center.y), radius: radius, angle: angle, negative: negative)
     }
     
     public func arc(to points: (Point, Point), radius: Double) {
@@ -420,15 +420,15 @@ public final class Context {
         let center = Point(x: x1 + radius * (t * dx0 + n0x), y: y1 + radius * (t * dy0 + n0y))
         let angle = (start: atan2(-n0y, -n0x), end: atan2(-n2y, -n2x))
         
-        self.arc(center: center, radius: radius, angle: angle, negative: (san < 0))
+        self.arc(center, radius: radius, angle: angle, negative: (san < 0))
     }
     
-    public func add(rect: Rect) {
+    public func add(_ rect: Rect) {
         
         internalContext.addRectangle(x: rect.origin.x, y: rect.origin.y, width: rect.size.width, height: rect.size.height)
     }
     
-    public func add(path: Path) {
+    public func add(_ path: Path) {
         
         for element in path.elements {
             
@@ -472,9 +472,9 @@ public final class Context {
         }
     }
     
-    public func fill(evenOdd: Bool = false) throws {
+    public func fill(_ evenOdd: Bool = false) throws {
         
-        try fillPath(evenOdd: evenOdd, preserve: false)
+        try fillPath(evenOdd, preserve: false)
     }
     
     public func clear() throws {
@@ -493,15 +493,15 @@ public final class Context {
     public func draw(_ mode: DrawingMode = DrawingMode()) throws {
         
         switch mode {
-        case .fill: try fillPath(evenOdd: false, preserve: false)
-        case .evenOddFill: try fillPath(evenOdd: true, preserve: false)
-        case .fillStroke: try fillPath(evenOdd: false, preserve: true)
-        case .evenOddFillStroke: try fillPath(evenOdd: true, preserve: true)
+        case .fill: try fillPath(false, preserve: false)
+        case .evenOddFill: try fillPath(true, preserve: false)
+        case .fillStroke: try fillPath(false, preserve: true)
+        case .evenOddFillStroke: try fillPath(true, preserve: true)
         case .stroke: try stroke()
         }
     }
     
-    public func clip(evenOdd: Bool = false) {
+    public func clip(_ evenOdd: Bool = false) {
         
         if evenOdd {
             
@@ -520,13 +520,13 @@ public final class Context {
     public func clip(to rect: Rect) {
         
         beginPath()
-        add(rect: rect)
+        add(rect)
         clip()
     }
     
     // MARK: - Using Transparency Layers
     
-    public func beginTransparencyLayer(rect: Rect? = nil) throws {
+    public func beginTransparencyLayer(_ rect: Rect? = nil) throws {
         
         // in case we clip (for the rect)
         internalContext.save()
@@ -539,7 +539,7 @@ public final class Context {
         if let rect = rect {
             
             internalContext.newPath()
-            add(rect: rect)
+            add(rect)
             internalContext.clip()
         }
         
@@ -559,7 +559,7 @@ public final class Context {
         
         // paint contents
         internalContext.source = group
-        internalContext.paint(alpha: internalState.alpha)
+        internalContext.paint(internalState.alpha)
         
         // undo clipping (if any)
         internalContext.restore()
@@ -573,7 +573,7 @@ public final class Context {
     // MARK: - Drawing an Image to a Graphics Context
     
     /// Draws an image into a graphics context.
-    public func draw(image: Image) {
+    public func draw(_ image: Image) {
         
         fatalError("Not implemented")
     }
@@ -601,11 +601,11 @@ public final class Context {
         
         cairoTextMatrix.multiply(a: cairoTextMatrix, b: textMatrix.toCairo())
         
-        internalContext.setFont(matrix: cairoTextMatrix)
+        internalContext.setFont(cairoTextMatrix)
         
         internalContext.source = internalState.fill?.pattern ?? DefaultPattern
         
-        internalContext.show(text: text)
+        internalContext.show(text)
         
         let distance = internalContext.currentPoint ?? (0, 0)
         
@@ -622,7 +622,7 @@ public final class Context {
     }
     
     @inline(__always)
-    public func show(text: String) {
+    public func show(_ text: String) {
         
         guard let font = internalState.font?.scaledFont,
             fontSize > 0.0 && text.isEmpty == false
@@ -630,10 +630,10 @@ public final class Context {
         
         let glyphs = text.unicodeScalars.map { font[UInt($0.value)] }
         
-        show(glyphs: glyphs)
+        show(glyphs)
     }
     
-    public func show(glyphs: [FontIndex]) {
+    public func show(_ glyphs: [FontIndex]) {
         
         guard let font = internalState.font,
             fontSize > 0.0 && glyphs.isEmpty == false
@@ -697,17 +697,17 @@ public final class Context {
         
         cairoTextMatrix.multiply(a: cairoTextMatrix, b: silicaTextMatrix)
         
-        internalContext.setFont(matrix: cairoTextMatrix)
+        internalContext.setFont(cairoTextMatrix)
         
         internalContext.source = internalState.fill?.pattern ?? DefaultPattern
         
         // show glyphs
-        cairoGlyphs.forEach { internalContext.show(glyph: $0) }
+        cairoGlyphs.forEach { internalContext.show($0) }
     }
     
     // MARK: - Private Functions
     
-    private func fillPath(evenOdd: Bool, preserve: Bool) throws {
+    fileprivate func fillPath(_ evenOdd: Bool, preserve: Bool) throws {
         
         if internalState.shadow != nil {
             
@@ -736,12 +736,12 @@ public final class Context {
         }
     }
     
-    private func startShadow() {
+    fileprivate func startShadow() {
         
         internalContext.pushGroup()
     }
     
-    private func endShadow() {
+    fileprivate func endShadow() {
         
         let pattern = internalContext.popGroup()
         
@@ -763,7 +763,7 @@ public final class Context {
         
         internalContext.source = internalState.shadow!.pattern
         
-        internalContext.mask(surface: alphaSurface, at: (internalState.shadow!.offset.width, internalState.shadow!.offset.height))
+        internalContext.mask(alphaSurface, at: (internalState.shadow!.offset.width, internalState.shadow!.offset.height))
         
         // draw content
         internalContext.source = pattern
@@ -778,7 +778,7 @@ public final class Context {
 /// Default black pattern
 fileprivate let DefaultPattern = Cairo.Pattern(color: (red: 0, green: 0, blue: 0))
 
-fileprivate extension Silica.Context {
+fileprivate extension Context {
     
     /// To save non-Cairo state variables
     fileprivate final class State {

@@ -9,15 +9,15 @@
 /// CoreGraphics compatible wrapper for `Silica.Context`.
 public final class CGContextWrapper {
     
-    public let silicaContext: Silica.Context
+    public let silicaContext: Context
     
-    public init(_ context: Silica.Context) {
+    public init(_ context: Context) {
         
         self.silicaContext = context
     }
     
     @inline(__always)
-    public func beginTransparencyLayer(auxiliaryInfo: [String: Any]?) {
+    public func beginTransparencyLayer(_ auxiliaryInfo: [String: Any]?) {
         
         try! silicaContext.beginTransparencyLayer()
     }

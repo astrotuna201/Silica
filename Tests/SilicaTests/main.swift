@@ -7,6 +7,7 @@
 //
 
 import XCTest
+//@testable import SilicaTests
 
 #if os(OSX) || os(iOS) || os(watchOS)
     func XCTMain(_ testCases: [XCTestCaseEntry]) { fatalError("Not Implemented. Linux only") }
@@ -16,4 +17,6 @@ import XCTest
     struct XCTestCaseEntry { }
 #endif
 
-XCTMain([testCase(FontTests.allTests)])
+XCTMain([
+	testCase(SilicaTests.allTests),
+])

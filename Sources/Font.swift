@@ -14,7 +14,7 @@ import CFontConfig
 public struct Font: Equatable, Hashable {
     
     /// Private font cache.
-    private static var cache = [String: Font]()
+    fileprivate static var cache = [String: Font]()
     
     // MARK: - Properties
     
@@ -39,7 +39,7 @@ public struct Font: Equatable, Hashable {
         } else {
             
             // create new font
-            guard let (fontConfigPattern, family) = FcPattern(name: name)
+            guard let (fontConfigPattern, family) = FcPattern(name)
                 else { return nil }
             
             let face = FontFace(fontConfigPattern: fontConfigPattern)
@@ -112,7 +112,7 @@ public extension Font {
         return glyphPositions
     }
     
-    func singleLineWidth(text: String, fontSize: Double, textMatrix: AffineTransform = AffineTransform.identity) -> Double {
+    func singleLineWidth(_ text: String, fontSize: Double, textMatrix: AffineTransform = AffineTransform.identity) -> Double {
         
         let glyphs = text.unicodeScalars.map { scaledFont[UInt($0.value)] }
         
@@ -125,7 +125,7 @@ public extension Font {
 // MARK: - Private
 
 /// Initialize a pointer to a `FcPattern` object created from the specified PostScript font name.
-private func FcPattern(name: String) -> (pointer: OpaquePointer, family: String)? {
+private func FcPattern(_ name: String) -> (pointer: OpaquePointer, family: String)? {
     
     guard let pattern = FcPatternCreate()
         else { return nil }
@@ -164,8 +164,7 @@ private func FcPattern(name: String) -> (pointer: OpaquePointer, family: String)
         let traitsString = String(cString: trimmedCString)
         
         let familyLength = name.utf8.count - traitsString.utf8.count - 1 // for separator
-        
-        family = name.substring(range: 0 ..< familyLength)!
+        family = name.substring(0 ..< familyLength)!
         
         traits = traitsString
         
@@ -206,7 +205,7 @@ private func FcPattern(name: String) -> (pointer: OpaquePointer, family: String)
         }
     }
     
-    guard FcConfigSubstitute(nil, pattern, FcMatchPattern) != 0
+    guard FcConfigSubstitute(nil, pattern, CFontConfig.FcMatchPattern) != 0
         else { return nil }
     
     FcDefaultSubstitute(pattern)
@@ -226,7 +225,7 @@ private func FcPattern(name: String) -> (pointer: OpaquePointer, family: String)
 
 internal extension String {
     
-    func substring(range: Range<Int>) -> String? {
+    func substring(_ range: Range<Int>) -> String? {
         let indexRange = utf8.index(utf8.startIndex, offsetBy: range.lowerBound) ..< utf8.index(utf8.startIndex, offsetBy: range.upperBound)
         return String(utf8[indexRange])
     }
