@@ -839,13 +839,20 @@ internal extension Collection {
 		return Array(result)
 	}
 	
-	@inline(__always)
-	func merge<C: Collection, T>
+	//@inline(__always)
+	/*func merge<C: Collection, T>
 		(_ other: C) -> [(Iterator.Element, T)]
 		where C.Iterator.Element == T, C.IndexDistance == IndexDistance, C.Index == Index {
 			
 			precondition(self.count == other.count, "The collection to merge must be of the same size")
 			
 			return self.indexedMap { ($0.1, other[$0.0]) }
+	}*/
+	
+	func merge<C: Collection, T>(_ other: C) -> [(Iterator.Element, T)]
+		where C.Iterator.Element == T, C.IndexDistance == IndexDistance, C.Index == Index {
+			precondition(self.count == other.count, "The collection to merge must be of the same size")
+			return Array(zip(self, other).map({ ($0, $1) }))
 	}
+	
 }
