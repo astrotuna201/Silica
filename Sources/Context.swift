@@ -423,12 +423,12 @@ public final class Context {
 		self.arc(center: center, radius: radius, angle: angle, negative: (san < 0))
 	}
 	
-	public func add(rect: Rect) {
+	public func add(_ rect: Rect) {
 		
 		internalContext.addRectangle(x: rect.origin.x, y: rect.origin.y, width: rect.size.width, height: rect.size.height)
 	}
 	
-	public func add(path: Path) {
+	public func add(_ path: Path) {
 		
 		for element in path.elements {
 			
@@ -501,7 +501,7 @@ public final class Context {
 		}
 	}
 	
-	public func clip(evenOdd: Bool = false) {
+	public func clip(_ evenOdd: Bool = false) {
 		
 		if evenOdd {
 			
@@ -520,7 +520,7 @@ public final class Context {
 	public func clip(to rect: Rect) {
 		
 		beginPath()
-		add(rect: rect)
+		add(rect)
 		clip()
 	}
 	
@@ -539,7 +539,7 @@ public final class Context {
 		if let rect = rect {
 			
 			internalContext.newPath()
-			add(rect: rect)
+			add(rect)
 			internalContext.clip()
 		}
 		
