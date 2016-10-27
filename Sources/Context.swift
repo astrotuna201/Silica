@@ -215,7 +215,7 @@ public final class Context {
     
     public var fontSize: Double {
         
-        @inline(__always)
+        //@inline(__always)
         get { return internalState.fontSize }
         
         set { internalState.fontSize = newValue }
@@ -516,7 +516,7 @@ public final class Context {
         }
     }
     
-    @inline(__always)
+    //@inline(__always)
     public func clip(to rect: Rect) {
         
         beginPath()
@@ -621,7 +621,7 @@ public final class Context {
         }
     }
     
-    @inline(__always)
+    //@inline(__always)
     public func show(_ text: String) {
         
         guard let font = internalState.font?.scaledFont,
@@ -839,7 +839,7 @@ internal extension Collection {
         return Array(result)
     }
     
-    @inline(__always)
+    //@inline(__always)
     func merge<C: Collection, T>
         (_ other: C) -> [(Iterator.Element, T)]
         where C.Iterator.Element == T, C.IndexDistance == IndexDistance, C.Index == Index {
