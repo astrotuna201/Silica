@@ -622,7 +622,7 @@ public final class Context {
 	}
 	
 	//@inline(__always)
-	public func show(text: String) {
+	public func show(_ text: String) {
 		
 		guard let font = internalState.font?.scaledFont,
 			fontSize > 0.0 && text.isEmpty == false
@@ -642,10 +642,10 @@ public final class Context {
 		let advances = font.advances(for: glyphs, fontSize: fontSize, textMatrix: textMatrix, characterSpacing: characterSpacing)
 		// workaround for merge crashing swift compiler for v >3.0.1GM
 		//show(glyphs: unsafeBitCast(glyphs.merge(advances), to: [(glyph: FontIndex, advance: Size)].self))
-		show(glyphs: unsafeBitCast(glyphs.indexedMap({($0.1, advances[$0.0])}), to: [(glyph: FontIndex, advance: Size)].self))
+		show(unsafeBitCast(glyphs.indexedMap({($0.1, advances[$0.0])}), to: [(glyph: FontIndex, advance: Size)].self))
 	}
 	
-	public func show(glyphs glyphAdvances: [(glyph: FontIndex, advance: Size)]) {
+	public func show(_ glyphAdvances: [(glyph: FontIndex, advance: Size)]) {
 		
 		guard let font = internalState.font,
 			fontSize > 0.0 && glyphAdvances.isEmpty == false
@@ -659,7 +659,7 @@ public final class Context {
 		// workaround for merge crashing swift compiler for v >3.0.1GM
 
 		//show(glyphs: unsafeBitCast(glyphs.merge(positions), to: [(glyph: FontIndex, position: Point)].self))
-		show(glyphs: unsafeBitCast(glyphs.indexedMap({($0.1, positions[$0.0])}), to: [(glyph: FontIndex, position: Point)].self))
+		show(unsafeBitCast(glyphs.indexedMap({($0.1, positions[$0.0])}), to: [(glyph: FontIndex, position: Point)].self))
 		
 		// advance text position
 		advances.forEach {
@@ -668,7 +668,7 @@ public final class Context {
 		}
 	}
 	
-	public func show(glyphs glyphPositions: [(glyph: FontIndex, position: Point)]) {
+	public func show(_ glyphPositions: [(glyph: FontIndex, position: Point)]) {
 		
 		guard let font = internalState.font?.scaledFont,
 			fontSize > 0.0 && glyphPositions.isEmpty == false
