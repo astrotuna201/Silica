@@ -58,6 +58,7 @@
 
 /* Begin PBXFileReference section */
 		42B84A051DBE2E6800E6B461 /* SilicaTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SilicaTests.swift; path = ../../Tests/SilicaTests/SilicaTests.swift; sourceTree = "<group>"; };
+		42DC29281DC23B780084FE9B /* LinuxMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LinuxMain.swift; path = ../../Tests/LinuxMain.swift; sourceTree = "<group>"; };
 		6E169A4B1CE404A200C60B0B /* SilicaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SilicaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E169A4F1CE404A200C60B0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6E169A5C1CE4290D00C60B0B /* Cairo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cairo.framework; path = ../../Carthage/Build/Mac/Cairo.framework; sourceTree = "<group>"; };
@@ -188,6 +189,7 @@
 		6E4419E81CFFB401002F74E1 /* SilicaTests */ = {
 			isa = PBXGroup;
 			children = (
+				42DC29281DC23B780084FE9B /* LinuxMain.swift */,
 				42B84A051DBE2E6800E6B461 /* SilicaTests.swift */,
 			);
 			path = SilicaTests;

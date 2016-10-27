@@ -14,10 +14,10 @@ class SilicaTests: XCTestCase {
 
 	func testCreateSimpleFont() {
 		
-		guard let font = Font(name: "MicrosoftSansSerif")
+		guard let font = Font(name: "Arial")
 			else { XCTFail("Could not create font"); return }
 		
-		let expectedFullName = "Microsoft Sans Serif"
+		let expectedFullName = "Arial"
 		
 		XCTAssert(font.name == font.name)
 		XCTAssert(expectedFullName == font.scaledFont.fullName, "\(expectedFullName) == \(font.scaledFont.fullName)")
@@ -25,10 +25,10 @@ class SilicaTests: XCTestCase {
 	
 	func testCreateTraitFont() {
 		
-		guard let font = Font(name: "MicrosoftSansSerif-Bold")
+		guard let font = Font(name: "Arial-Bold")
 			else { XCTFail("Could not create font"); return }
 		
-		let expectedFullName = "Microsoft Sans Serif"
+		let expectedFullName = "Arial"
 		
 		XCTAssert(font.name == font.name)
 		XCTAssert(expectedFullName == font.scaledFont.fullName, "\(expectedFullName) == \(font.scaledFont.fullName)")
