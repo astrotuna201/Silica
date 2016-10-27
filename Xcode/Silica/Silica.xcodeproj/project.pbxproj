@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		42B84A061DBE2E6800E6B461 /* SilicaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B84A051DBE2E6800E6B461 /* SilicaTests.swift */; };
-		42B84A081DBE2E7600E6B461 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B84A071DBE2E7600E6B461 /* main.swift */; };
 		42DC29241DC236D80084FE9B /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E339B851CDFC672008E399E /* Context.swift */; };
+		42DC29271DC238AB0084FE9B /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B84A071DBE2E7600E6B461 /* main.swift */; };
 		6E169A501CE404A200C60B0B /* Silica.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E339B691CDFC492008E399E /* Silica.framework */; };
 		6E169A5E1CE4291F00C60B0B /* Cairo.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 6E169A5C1CE4290D00C60B0B /* Cairo.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6E16EEA01CE2F0B800DF76A0 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E16EE9F1CE2F0B800DF76A0 /* Point.swift */; };
@@ -319,8 +319,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42DC29271DC238AB0084FE9B /* main.swift in Sources */,
 				42B84A061DBE2E6800E6B461 /* SilicaTests.swift in Sources */,
-				42B84A081DBE2E7600E6B461 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
