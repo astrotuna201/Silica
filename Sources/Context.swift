@@ -640,8 +640,9 @@ public final class Context {
 			else { return }
 		
 		let advances = font.advances(for: glyphs, fontSize: fontSize, textMatrix: textMatrix, characterSpacing: characterSpacing)
-		
-		show(glyphs: unsafeBitCast(glyphs.merge(advances), to: [(glyph: FontIndex, advance: Size)].self))
+		// workaround for merge crashing swift compiler for v >3.0.1GM
+		//show(glyphs: unsafeBitCast(glyphs.merge(advances), to: [(glyph: FontIndex, advance: Size)].self))
+		show(glyphs: unsafeBitCast(glyphs.indexedMap({($0.1, advances[$0.0])}), to: [(glyph: FontIndex, advance: Size)].self))
 	}
 	
 	public func show(glyphs glyphAdvances: [(glyph: FontIndex, advance: Size)]) {
@@ -655,7 +656,10 @@ public final class Context {
 		let positions = font.positions(for: advances, textMatrix: textMatrix)
 		
 		// render
-		show(glyphs: unsafeBitCast(glyphs.merge(positions), to: [(glyph: FontIndex, position: Point)].self))
+		// workaround for merge crashing swift compiler for v >3.0.1GM
+
+		//show(glyphs: unsafeBitCast(glyphs.merge(positions), to: [(glyph: FontIndex, position: Point)].self))
+		show(glyphs: unsafeBitCast(glyphs.indexedMap({($0.1, positions[$0.0])}), to: [(glyph: FontIndex, position: Point)].self))
 		
 		// advance text position
 		advances.forEach {
@@ -834,8 +838,6 @@ internal extension Collection {
 			result.append(try transform(i, self[i]))
 			formIndex(after: &i)
 		}
-		
-		//_expectEnd(i, self)
 		return Array(result)
 	}
 	
@@ -846,13 +848,7 @@ internal extension Collection {
 			
 			precondition(self.count == other.count, "The collection to merge must be of the same size")
 			
-			return self.indexedMap { ($0.1, other[$0.0]) }
+			//return self.indexedMap { ($0.1, other[$0.0]) }
 	}*/
-	
-	func merge<C: Collection, T>(_ other: C) -> [(Iterator.Element, T)]
-		where C.Iterator.Element == T, C.IndexDistance == IndexDistance, C.Index == Index {
-			precondition(self.count == other.count, "The collection to merge must be of the same size")
-			return Array(zip(self, other).map({ ($0, $1) }))
-	}
 	
 }
